@@ -109,14 +109,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        map.put(adminName, new ArrayList<>());
-        map.get(adminName).add(adminName);
-        map.get(adminName).add(adminPass);
-        map.get(adminName).add("Yönetici");
-        map.get(adminName).add(UUID.randomUUID().toString());
-        map.get(adminName).add(0+"");
-        map.get(adminName).add(false+"");
-        map.get(adminName).add(3+"");
+
+        signUp(adminName, adminPass, "Yönetici", UUID.randomUUID().toString(), 0, false, 3);
 
         while (true) {
             if (isLoggedIn) {
