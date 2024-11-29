@@ -8,25 +8,33 @@ public class Main {
     public static HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
     final static String adminName = "admin";
     final static String adminPass = "admin";
+    public static String username = "";
+    public static String password = "";
     public static Scanner scanner = new Scanner(System.in);
+    public static boolean isLoggedIn = false;
 
 
     public static void operation(int x) {
         switch (x) {
             case 6:
                 authorization(2);
+                break;
+            case 7:
+                username = "";
+                password = "";
+                isLoggedIn = false;
         }
     }
     public static boolean signIn(String username, String password, int phase) {
         if(phase == 1) {
             for (ArrayList<String> x : map.values()) {
-                System.out.println(x);
                 if (x.get(0).equals(username) && x.get(1).equals(password)) {
+                    System.out.println("Başarıyla giriş yapıldı");
+                    isLoggedIn = true;
                     return true;
                 }
             }
         } else if(phase == 2) {
-            System.out.println("Başarıyla giriş yapıldı!");
             System.out.printf("Hoşgeldin %s! %n", map.get(username).get(2));
             System.out.println("Öğrencileri görüntülemek için 1");
             System.out.println("Ders programını görüntülemek için 2");
@@ -34,6 +42,7 @@ public class Main {
             System.out.println("Bilgilerinizi değiştirmek için 4");
             System.out.println("Öğretmenleri görüntülemek için 5");
             System.out.println("Kayıt oluşturmak için 6");
+            System.out.println("Çıkış yapmak için 7");
             int x = scanner.nextInt();
             scanner.nextLine();
             operation(x);
@@ -65,9 +74,9 @@ public class Main {
         try {
             if(x == 1) {
                 System.out.print("Lütfen kullanıcı adınızı giriniz: ");
-                String username = scanner.nextLine();
+                username = scanner.nextLine();
                 System.out.print("Lütfen şifrenizi giriniz: ");
-                String password = scanner.nextLine();
+                password = scanner.nextLine();
                 if (signIn(username, password, 1)) {
                     signIn(username, password, 2);
                 } else {
@@ -110,8 +119,11 @@ public class Main {
         map.get(adminName).add(3+"");
 
         while (true) {
-            System.out.println("Hoşgeldiniz!");
-            authorization(1);
+            if (isLoggedIn) {
+                signIn(username, password, 2);
+            } else {
+                authorization(1);
+            }
         }
 
 
