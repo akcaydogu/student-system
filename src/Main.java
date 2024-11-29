@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -15,7 +14,7 @@ public class Main {
     public static boolean isLoggedIn = false;
 
 
-    public static void operation(int x, int permissionLevel) {
+    public static void operation(int x) {
         switch (x) {
             case 6:
                 authorization(2);
