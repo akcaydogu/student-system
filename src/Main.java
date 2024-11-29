@@ -40,7 +40,7 @@ public class Main {
             System.out.println("--------------------------------");
             System.out.println("Notlar 1");
             System.out.println("Devamsızlık 2");
-            System.out.println("Ders Programı 3");
+            System.out.println("Ders Programı 32");
             System.out.println("Bilgileriniz 4");
             System.out.println("--------------------------------");
             System.out.println("Öğrencileri görüntülemek için 1");
