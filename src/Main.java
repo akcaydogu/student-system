@@ -117,6 +117,8 @@ public class Main {
                 signIn(username, password, 2);
             } else {
                 authorization(1);
+
+                System.out.println("hello");
             }
         }
 
