@@ -128,7 +128,6 @@ public class Main {
 
                 System.out.println("hello");
                 System.out.println("Aylin");
-                System.out.println("Dogukan commit oldu mu?");
             }
         }
 
