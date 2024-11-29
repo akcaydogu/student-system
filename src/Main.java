@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -14,15 +15,16 @@ public class Main {
     public static boolean isLoggedIn = false;
 
 
-    public static void operation(int x) {
+    public static void operation(int x, int permissionLevel) {
         switch (x) {
             case 6:
                 authorization(2);
                 break;
-            case 7:
+            case 0:
                 username = "";
                 password = "";
                 isLoggedIn = false;
+                break;
         }
     }
     public static boolean signIn(String username, String password, int phase) {
@@ -36,13 +38,20 @@ public class Main {
             }
         } else if(phase == 2) {
             System.out.printf("Hoşgeldin %s! %n", map.get(username).get(2));
+            System.out.println("--------------------------------");
+            System.out.println("Notlar 1");
+            System.out.println("Devamsızlık 2");
+            System.out.println("Ders Programı 3");
+            System.out.println("Bilgileriniz 4");
+            System.out.println("--------------------------------");
             System.out.println("Öğrencileri görüntülemek için 1");
             System.out.println("Ders programını görüntülemek için 2");
             System.out.println("Duyuru eklemek için 3");
-            System.out.println("Bilgilerinizi değiştirmek için 4");
-            System.out.println("Öğretmenleri görüntülemek için 5");
+            System.out.println("--------------------------------");
+            System.out.println("Öğretmenleri görüntülemek için 1");
+            System.out.println("Tüm kayıtları görüntülemek için 2");
             System.out.println("Kayıt oluşturmak için 6");
-            System.out.println("Çıkış yapmak için 7");
+            System.out.println("Çıkış yapmak için 0");
             int x = scanner.nextInt();
             scanner.nextLine();
             operation(x);
