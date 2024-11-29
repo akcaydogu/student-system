@@ -19,6 +19,7 @@
 - ####  Ders programı görme
 - ####  Devamsızlık görme
 - ####  Öğrenci bilgileri güncelleme
+- #### Test
 
 
 ## Öğretmen Yetkileri
