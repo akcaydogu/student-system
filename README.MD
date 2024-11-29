@@ -38,3 +38,4 @@
 - ####  Devamsızlık girme
 - ####  Duyuru ekleme
 - ####  Sınıf not ortalaması ve bilgileri
+- merhaba
