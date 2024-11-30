@@ -16,9 +16,11 @@ public class Main {
 
     public static void operation(int x) {
         switch (x) {
+            //Kayıt işlemini çağırır
             case 6:
                 authorization(2);
                 break;
+            //Çıkış işlemi
             case 0:
                 username = "";
                 password = "";
@@ -28,7 +30,9 @@ public class Main {
     }
     public static boolean signIn(String username, String password, int phase) {
         if(phase == 1) {
+            //Map'in içinde ki değerleri x değerine atayıp döngü içerisinde hepsini döndürür
             for (ArrayList<String> x : map.values()) {
+                //Eğer x'in 0. indexi alınan username 1. indexi alınan şifreye eşitse giriş sağlar
                 if (x.get(0).equals(username) && x.get(1).equals(password)) {
                     System.out.println("Başarıyla giriş yapıldı");
                     isLoggedIn = true;
@@ -53,6 +57,7 @@ public class Main {
             System.out.println("Çıkış yapmak için 0");
             int x = scanner.nextInt();
             scanner.nextLine();
+            //Operation methodunu çağırır ve girmek istediğimiz işlemi methodun içine atar
             operation(x);
         }
 
@@ -62,12 +67,16 @@ public class Main {
 
     //username-password-isim-numara-yaş-duyuru
     public static void signUp(String username, String password, String name, String id, int age, boolean isDuyuru, int permissionLevel) {
+
+        //Map'in içinde ki değerleri x'e atar ve döngü içinde kontrol sağlanır
         for (String x : map.keySet()) {
+            //Eğer x değeri daha önce kullanıldıysa uyarı verir
             if(x.equals(username)) {
                 System.out.println("Bu kullanıcı adı ile kaydolan başka bir üye zaten mevcut!");
             }
         }
 
+        //Mapin içine yeni bir key ve keyin içine değerler yerleştirir (Keyin adı "username" valueler ise .add fonksiyonu ile eklenir)
         map.put(username, new ArrayList<>());
         map.get(username).add(username);
         map.get(username).add(password);
@@ -85,12 +94,15 @@ public class Main {
                 username = scanner.nextLine();
                 System.out.print("Lütfen şifrenizi giriniz: ");
                 password = scanner.nextLine();
+
+                //Giriş methodunu çağırır eğer true döndürüyorsa içerisinde 2. giriş metodunu çağırır
                 if (signIn(username, password, 1)) {
                     signIn(username, password, 2);
                 } else {
                     System.out.println("Yanlış kullanıcı adı veya şifre girdiniz!");
                 }
             } else if (x == 2) {
+                //Kayıt için gerekli değerleri alır
                 System.out.println("Kayıt Sistemi");
                 System.out.print("Lütfen kullanıcı adını giriniz: ");
                 String username = scanner.nextLine();
@@ -105,6 +117,8 @@ public class Main {
                 System.out.print("Lütfen yetki seviyesini giriniz 1/2/3 : ");
                 int permissionLevel = scanner.nextInt();
                 scanner.nextLine();
+
+                //Kayıt methoduna değerleri gönderir
                 signUp(username, password, name, uniqueID, age, false, permissionLevel);
                 System.out.println(map);
             } else {
@@ -117,7 +131,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-
+        //Yöneticiyi program açıldığında kayıt eder
         signUp(adminName, adminPass, "Yönetici", UUID.randomUUID().toString(), 0, false, 3);
 
         while (true) {
