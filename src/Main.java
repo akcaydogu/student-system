@@ -24,7 +24,6 @@ public class Main {
             case 3 :
                 duyuru();
                 break;
-
             //Çıkış işlemi
             case 0:
                 username = "";
@@ -145,6 +144,7 @@ public class Main {
         System.out.println("Duyuruyu giriniz:");
         duyuru=scanner.nextLine();
 
+
         for (String x2 : map.keySet()){
             map.get(x2).set(5,"true");
 
@@ -154,6 +154,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+
         //Yöneticiyi program açıldığında kayıt eder
         signUp(adminName, adminPass, "Yönetici", UUID.randomUUID().toString(), 0, false, 3);
 
@@ -162,8 +163,6 @@ public class Main {
                 signIn(username, password, 2);
             } else {
                 authorization(1);
-
-
             }
         }
 
@@ -171,3 +170,18 @@ public class Main {
 }
 
 
+                System.out.println("Giriş yapmak için 1");
+                System.out.println("Çıkış yapmak için 2");
+                int x = scanner.nextInt();
+                scanner.nextLine();
+                if (x == 2) {
+                    break;
+                } else if (x == 1) {
+                    System.out.print("\033c");
+                    authorization(1);
+                }
+            }
+        }
+
+    }
+}
