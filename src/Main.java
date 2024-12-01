@@ -8,6 +8,7 @@ public class Main {
     public static HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
     final static String adminName = "admin";
     final static String adminPass = "admin";
+    public static String duyuru= " " ;
     public static String username = "";
     public static String password = "";
     public static Scanner scanner = new Scanner(System.in);
@@ -20,12 +21,14 @@ public class Main {
             case 6:
                 authorization(2);
                 break;
+            case 3 :
+                duyuru();
+                break;
             //Çıkış işlemi
             case 0:
                 username = "";
                 password = "";
                 isLoggedIn = false;
-                System.out.print("\033c");
                 break;
         }
     }
@@ -36,6 +39,12 @@ public class Main {
                 //Eğer x'in 0. indexi alınan username 1. indexi alınan şifreye eşitse giriş sağlar
                 if (x.get(0).equals(username) && x.get(1).equals(password)) {
                     System.out.println("Başarıyla giriş yapıldı");
+
+                    if (map.get(username).get(5).equals("true")){
+                        System.out.println(duyuru);
+                        map.get(username).set(5,"false");
+
+                    }
                     isLoggedIn = true;
                     return true;
                 }
@@ -95,7 +104,7 @@ public class Main {
                 username = scanner.nextLine();
                 System.out.print("Lütfen şifrenizi giriniz: ");
                 password = scanner.nextLine();
-                System.out.print("\033c");
+
                 //Giriş methodunu çağırır eğer true döndürüyorsa içerisinde 2. giriş metodunu çağırır
                 if (signIn(username, password, 1)) {
                     signIn(username, password, 2);
@@ -104,6 +113,7 @@ public class Main {
                 }
             } else if (x == 2) {
                 //Kayıt için gerekli değerleri alır
+
                 System.out.println("Kayıt Sistemi");
                 System.out.print("Lütfen kullanıcı adını giriniz: ");
                 String username = scanner.nextLine();
@@ -118,7 +128,7 @@ public class Main {
                 System.out.print("Lütfen yetki seviyesini giriniz 1/2/3 : ");
                 int permissionLevel = scanner.nextInt();
                 scanner.nextLine();
-                System.out.print("\033c");
+
                 //Kayıt methoduna değerleri gönderir
                 signUp(username, password, name, uniqueID, age, false, permissionLevel);
                 System.out.println(map);
@@ -130,7 +140,20 @@ public class Main {
         }
     }
 
+    public static void duyuru(){
+        System.out.println("Duyuruyu giriniz:");
+        duyuru=scanner.nextLine();
+
+
+        for (String x2 : map.keySet()){
+            map.get(x2).set(5,"true");
+
+        }
+
+    }
+
     public static void main(String[] args) {
+
 
         //Yöneticiyi program açıldığında kayıt eder
         signUp(adminName, adminPass, "Yönetici", UUID.randomUUID().toString(), 0, false, 3);
@@ -139,6 +162,14 @@ public class Main {
             if (isLoggedIn) {
                 signIn(username, password, 2);
             } else {
+                authorization(1);
+            }
+        }
+
+    }
+}
+
+
                 System.out.println("Giriş yapmak için 1");
                 System.out.println("Çıkış yapmak için 2");
                 int x = scanner.nextInt();
@@ -154,6 +185,3 @@ public class Main {
 
     }
 }
-
-
-
