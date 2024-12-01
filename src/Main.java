@@ -153,8 +153,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
-
         //Yöneticiyi program açıldığında kayıt eder
         signUp(adminName, adminPass, "Yönetici", UUID.randomUUID().toString(), 0, false, 3);
 
@@ -163,23 +161,6 @@ public class Main {
                 signIn(username, password, 2);
             } else {
                 authorization(1);
-            }
-        }
-
-    }
-}
-
-
-                System.out.println("Giriş yapmak için 1");
-                System.out.println("Çıkış yapmak için 2");
-                int x = scanner.nextInt();
-                scanner.nextLine();
-                if (x == 2) {
-                    break;
-                } else if (x == 1) {
-                    System.out.print("\033c");
-                    authorization(1);
-                }
             }
         }
 
