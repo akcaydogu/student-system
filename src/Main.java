@@ -25,6 +25,7 @@ public class Main {
                 username = "";
                 password = "";
                 isLoggedIn = false;
+                System.out.print("\033c");
                 break;
         }
     }
@@ -44,7 +45,7 @@ public class Main {
             System.out.println("--------------------------------");
             System.out.println("Notlar 1");
             System.out.println("Devamsızlık 2");
-            System.out.println("Ders Programı 32");
+            System.out.println("Ders Programı 3");
             System.out.println("Bilgileriniz 4");
             System.out.println("--------------------------------");
             System.out.println("Öğrencileri görüntülemek için 1");
@@ -94,7 +95,7 @@ public class Main {
                 username = scanner.nextLine();
                 System.out.print("Lütfen şifrenizi giriniz: ");
                 password = scanner.nextLine();
-
+                System.out.print("\033c");
                 //Giriş methodunu çağırır eğer true döndürüyorsa içerisinde 2. giriş metodunu çağırır
                 if (signIn(username, password, 1)) {
                     signIn(username, password, 2);
@@ -117,7 +118,7 @@ public class Main {
                 System.out.print("Lütfen yetki seviyesini giriniz 1/2/3 : ");
                 int permissionLevel = scanner.nextInt();
                 scanner.nextLine();
-
+                System.out.print("\033c");
                 //Kayıt methoduna değerleri gönderir
                 signUp(username, password, name, uniqueID, age, false, permissionLevel);
                 System.out.println(map);
@@ -138,8 +139,16 @@ public class Main {
             if (isLoggedIn) {
                 signIn(username, password, 2);
             } else {
-                authorization(1);
-
+                System.out.println("Giriş yapmak için 1");
+                System.out.println("Çıkış yapmak için 2");
+                int x = scanner.nextInt();
+                scanner.nextLine();
+                if (x == 2) {
+                    break;
+                } else if (x == 1) {
+                    System.out.print("\033c");
+                    authorization(1);
+                }
             }
         }
 
