@@ -8,6 +8,7 @@ public class Main {
     public static HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
     final static String adminName = "admin";
     final static String adminPass = "admin";
+    public static String duyuru= " " ;
     public static String username = "";
     public static String password = "";
     public static Scanner scanner = new Scanner(System.in);
@@ -20,6 +21,10 @@ public class Main {
             case 6:
                 authorization(2);
                 break;
+            case 3 :
+                duyuru();
+                break;
+
             //Çıkış işlemi
             case 0:
                 username = "";
@@ -35,6 +40,12 @@ public class Main {
                 //Eğer x'in 0. indexi alınan username 1. indexi alınan şifreye eşitse giriş sağlar
                 if (x.get(0).equals(username) && x.get(1).equals(password)) {
                     System.out.println("Başarıyla giriş yapıldı");
+
+                    if (map.get(username).get(5).equals("true")){
+                        System.out.println(duyuru);
+                        map.get(username).set(5,"false");
+
+                    }
                     isLoggedIn = true;
                     return true;
                 }
@@ -103,6 +114,7 @@ public class Main {
                 }
             } else if (x == 2) {
                 //Kayıt için gerekli değerleri alır
+
                 System.out.println("Kayıt Sistemi");
                 System.out.print("Lütfen kullanıcı adını giriniz: ");
                 String username = scanner.nextLine();
@@ -127,6 +139,17 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static void duyuru(){
+        System.out.println("Duyuruyu giriniz:");
+        duyuru=scanner.nextLine();
+
+        for (String x2 : map.keySet()){
+            map.get(x2).set(5,"true");
+
+        }
+
     }
 
     public static void main(String[] args) {
