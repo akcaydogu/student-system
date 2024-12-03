@@ -8,7 +8,7 @@ public class Main {
     public static HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
     final static String adminName = "admin";
     final static String adminPass = "admin";
-    public static String duyuru= " " ;
+    public static String duyuru = " ";
     public static String username = "";
     public static String password = "";
     public static Scanner scanner = new Scanner(System.in);
@@ -21,7 +21,7 @@ public class Main {
             case 6:
                 authorization(2);
                 break;
-            case 3 :
+            case 3:
                 duyuru();
                 break;
             //Çıkış işlemi
@@ -32,24 +32,25 @@ public class Main {
                 break;
         }
     }
+
     public static boolean signIn(String username, String password, int phase) {
-        if(phase == 1) {
+        if (phase == 1) {
             //Map'in içinde ki değerleri x değerine atayıp döngü içerisinde hepsini döndürür
             for (ArrayList<String> x : map.values()) {
                 //Eğer x'in 0. indexi alınan username 1. indexi alınan şifreye eşitse giriş sağlar
                 if (x.get(0).equals(username) && x.get(1).equals(password)) {
                     System.out.println("Başarıyla giriş yapıldı");
 
-                    if (map.get(username).get(5).equals("true")){
+                    if (map.get(username).get(5).equals("true")) {
                         System.out.println(duyuru);
-                        map.get(username).set(5,"false");
+                        map.get(username).set(5, "false");
 
                     }
                     isLoggedIn = true;
                     return true;
                 }
             }
-        } else if(phase == 2) {
+        } else if (phase == 2) {
             System.out.printf("Hoşgeldin %s! %n", map.get(username).get(2));
             System.out.println("--------------------------------");
             System.out.println("Notlar 1");
@@ -81,7 +82,7 @@ public class Main {
         //Map'in içinde ki değerleri x'e atar ve döngü içinde kontrol sağlanır
         for (String x : map.keySet()) {
             //Eğer x değeri daha önce kullanıldıysa uyarı verir
-            if(x.equals(username)) {
+            if (x.equals(username)) {
                 System.out.println("Bu kullanıcı adı ile kaydolan başka bir üye zaten mevcut!");
             }
         }
@@ -92,14 +93,14 @@ public class Main {
         map.get(username).add(password);
         map.get(username).add(name);
         map.get(username).add(id);
-        map.get(username).add(age+"");
-        map.get(username).add(isDuyuru+"");
-        map.get(username).add(permissionLevel+"");
+        map.get(username).add(age + "");
+        map.get(username).add(isDuyuru + "");
+        map.get(username).add(permissionLevel + "");
     }
 
     public static void authorization(int x) {
         try {
-            if(x == 1) {
+            if (x == 1) {
                 System.out.print("Lütfen kullanıcı adınızı giriniz: ");
                 username = scanner.nextLine();
                 System.out.print("Lütfen şifrenizi giriniz: ");
@@ -140,13 +141,13 @@ public class Main {
         }
     }
 
-    public static void duyuru(){
+    public static void duyuru() {
         System.out.println("Duyuruyu giriniz:");
-        duyuru=scanner.nextLine();
+        duyuru = scanner.nextLine();
 
 
-        for (String x2 : map.keySet()){
-            map.get(x2).set(5,"true");
+        for (String x2 : map.keySet()) {
+            map.get(x2).set(5, "true");
 
         }
 
@@ -164,5 +165,50 @@ public class Main {
             }
         }
 
+    }
+}
+
+public static void courseAdd(String ogrenciAdi) {
+
+
+    System.out.println("Bir ders adi giriniz");
+    list2.get(ogrenciAdi).add(klavye.nextLine());
+    System.out.println("Bir ogretmen seciniz");
+    list2.get(ogrenciAdi).add(klavye.nextLine());
+    System.out.println("Ders notunu giriniz");
+    list2.get(ogrenciAdi).add(klavye.nextLine());
+    System.out.println("Devamsizligi giriniz");
+    list2.get(ogrenciAdi).add(klavye.nextLine());
+    System.out.println(list2);
+}
+
+
+public static void courseRemove(String ogrenciAdi) {
+
+    System.out.println("Silmek istediginiz ders bilgisini yaziniz");
+    String delete = klavye.nextLine();
+    if (list2.get(ogrenciAdi).contains(delete)) {
+
+        for (int i = 6; i < list2.get(ogrenciAdi).size(); i++) {
+
+            if (list2.get(ogrenciAdi).get(i).equals(delete)) {
+                list2.get(ogrenciAdi).remove(i + 3);
+                list2.get(ogrenciAdi).remove(i + 2);
+                list2.get(ogrenciAdi).remove(i + 1);
+                list2.get(ogrenciAdi).remove(i);
+
+            }
+        }
+
+    } else {
+        System.out.println("Boyle bir ders bilgisi bulunamadi");
+    }
+}
+
+public static void courseView(String ogrenciAdi) {
+
+
+    for (int i = 6; list2.get(ogrenciAdi).size() > i; i += 4) {
+        System.out.println(list2.get(ogrenciAdi).get(i) + " " + list2.get("ogrenciAdi").get(i + 1) + " " + list2.get("ogrenciAdi").get(i + 2) + " " + list2.get("ogrenciAdi").get(i + 3));
     }
 }
