@@ -15,20 +15,85 @@ public class Main {
     public static boolean isLoggedIn = false;
 
 
-    public static void operation(int x) {
-        switch (x) {
-            //Kayıt işlemini çağırır
-            case 6:
-                authorization(2);
+    public static void informationUser() {
+        System.out.printf("%-25s %-20s %-20s %-40s %-10s %-20s %n", "Öğrenci Kullanıcı Adı", "Öğrenci Şifresi", "Öğrenci Adı", "ID", "Yaş", "Yetki Seviyesi");
+        System.out.printf("%-25s %-20s %-20s %-40s %-10s %-20s %n", map.get(username).get(0), map.get(username).get(1), map.get(username).get(2), map.get(username).get(3), map.get(username).get(4), map.get(username).get(6));
+
+    }
+    public static void operation(int x, int accessLevel) {
+
+        switch (accessLevel){
+            case 1:
+                switch (x) {
+                    case 1:
+                        courseView(username);
+                        break;
+                    case 2:
+                        informationUser();
+                        break;
+                    case 0:
+                        username = "";
+                        password = "";
+                        isLoggedIn = false;
+                        break;
+                }
+                break;
+            case 2:
+                switch (x) {
+                    case 1:
+                        studentList();
+                        break;
+                    case 2:
+                        informationUser();
+                        break;
+                    case 0:
+                        username = "";
+                        password = "";
+                        isLoggedIn = false;
+                        break;
+                }
                 break;
             case 3:
-                duyuru();
-                break;
-            //Çıkış işlemi
-            case 0:
-                username = "";
-                password = "";
-                isLoggedIn = false;
+                switch (x) {
+                    //Kayıt işlemini çağırır
+                    case 1:
+                        studentList();
+                        System.out.println("Öğrenci seçenekleri :");
+                        System.out.println("Ders Eklemek için 1");
+                        System.out.println("Ders Silmek için 2");
+                        System.out.println("Derslerini görüntülemek için 3");
+                        int y = scanner.nextInt();
+                        scanner.nextLine();
+                        System.out.println("Lütfen öğrenci adı giriniz");
+                        String targetUsername = scanner.nextLine();
+                        switch (y) {
+                            case 1:
+                                courseAdd(targetUsername);
+                                break;
+                            case 2:
+                                courseRemove(targetUsername);
+                                break;
+                            case 3:
+                                courseView(targetUsername);
+                                break;
+                        }
+                        break;
+                    case 2:
+                        studentList();
+                        break;
+                    case 3:
+                        authorization(2);
+                        break;
+                    case 4:
+                        duyuru();
+                        break;
+                    //Çıkış işlemi
+                    case 0:
+                        username = "";
+                        password = "";
+                        isLoggedIn = false;
+                        break;
+                }
                 break;
         }
     }
@@ -51,25 +116,33 @@ public class Main {
                 }
             }
         } else if (phase == 2) {
+
+            int accessLevel = Integer.parseInt(map.get(username).get(6));
+
             System.out.printf("Hoşgeldin %s! %n", map.get(username).get(2));
             System.out.println("--------------------------------");
-            System.out.println("Notlar 1");
-            System.out.println("Devamsızlık 2");
-            System.out.println("Ders Programı 3");
-            System.out.println("Bilgileriniz 4");
-            System.out.println("--------------------------------");
-            System.out.println("Öğrencileri görüntülemek için 1");
-            System.out.println("Ders programını görüntülemek için 2");
-            System.out.println("Duyuru eklemek için 3");
-            System.out.println("--------------------------------");
-            System.out.println("Öğretmenleri görüntülemek için 1");
-            System.out.println("Tüm kayıtları görüntülemek için 2");
-            System.out.println("Kayıt oluşturmak için 6");
+            switch (accessLevel){
+                case 1:
+                    System.out.println("Ders bilgilerinizi görmek için 1");
+                    System.out.println("Kişisel Bilgileriniz için 2");
+                    break;
+                case 2:
+                    System.out.println("Öğrencileri görüntülemek için 1");
+                    System.out.println("Kişisel Bilgileriniz için 2");
+                    break;
+                case 3:
+                    System.out.println("Öğrencileri Görüntülemek için 1");
+                    System.out.println("Tüm kayıtları görüntülemek için 2");
+                    System.out.println("Kayıt oluşturmak için 3");
+                    System.out.println("Duyuru eklemek için 4");
+                    break;
+            }
             System.out.println("Çıkış yapmak için 0");
+            System.out.println("--------------------------------");
             int x = scanner.nextInt();
             scanner.nextLine();
             //Operation methodunu çağırır ve girmek istediğimiz işlemi methodun içine atar
-            operation(x);
+            operation(x, accessLevel);
         }
 
         return false;
@@ -84,6 +157,7 @@ public class Main {
             //Eğer x değeri daha önce kullanıldıysa uyarı verir
             if (x.equals(username)) {
                 System.out.println("Bu kullanıcı adı ile kaydolan başka bir üye zaten mevcut!");
+                return;
             }
         }
 
@@ -141,6 +215,13 @@ public class Main {
         }
     }
 
+    public static void studentList() {
+        System.out.printf("%-25s %-20s %-20s %-40s %-10s %-20s %n", "Öğrenci Kullanıcı Adı", "Öğrenci Şifresi", "Öğrenci Adı", "ID", "Yaş", "Yetki Seviyesi");
+        for (ArrayList x : map.values()) {
+            System.out.printf("%-25s %-20s %-20s %-40s %-10s %-20s %n", x.get(0), x.get(1), x.get(2), x.get(3), x.get(4), x.get(6));
+        }
+    }
+
     public static void duyuru() {
         System.out.println("Duyuruyu giriniz:");
         duyuru = scanner.nextLine();
@@ -166,49 +247,50 @@ public class Main {
         }
 
     }
-}
 
-public static void courseAdd(String ogrenciAdi) {
+    public static void courseAdd(String ogrenciAdi) {
 
-
-    System.out.println("Bir ders adi giriniz");
-    list2.get(ogrenciAdi).add(klavye.nextLine());
-    System.out.println("Bir ogretmen seciniz");
-    list2.get(ogrenciAdi).add(klavye.nextLine());
-    System.out.println("Ders notunu giriniz");
-    list2.get(ogrenciAdi).add(klavye.nextLine());
-    System.out.println("Devamsizligi giriniz");
-    list2.get(ogrenciAdi).add(klavye.nextLine());
-    System.out.println(list2);
-}
+        System.out.println("Bir ders adi giriniz");
+        map.get(ogrenciAdi).add(scanner.nextLine());
+        System.out.println("Bir ogretmen seciniz");
+        map.get(ogrenciAdi).add(scanner.nextLine());
+        System.out.println("Ders notunu giriniz");
+        map.get(ogrenciAdi).add(scanner.nextLine());
+        System.out.println("Devamsizligi giriniz");
+        map.get(ogrenciAdi).add(scanner.nextLine());
+        System.out.println(map);
+    }
 
 
-public static void courseRemove(String ogrenciAdi) {
+    public static void courseRemove(String ogrenciAdi) {
 
-    System.out.println("Silmek istediginiz ders bilgisini yaziniz");
-    String delete = klavye.nextLine();
-    if (list2.get(ogrenciAdi).contains(delete)) {
+        System.out.println("Silmek istediginiz ders bilgisini yaziniz");
+        String delete = scanner.nextLine();
+        if (map.get(ogrenciAdi).contains(delete)) {
 
-        for (int i = 6; i < list2.get(ogrenciAdi).size(); i++) {
+            for (int i = 6; i < map.get(ogrenciAdi).size(); i++) {
 
-            if (list2.get(ogrenciAdi).get(i).equals(delete)) {
-                list2.get(ogrenciAdi).remove(i + 3);
-                list2.get(ogrenciAdi).remove(i + 2);
-                list2.get(ogrenciAdi).remove(i + 1);
-                list2.get(ogrenciAdi).remove(i);
+                if (map.get(ogrenciAdi).get(i).equals(delete)) {
+                    map.get(ogrenciAdi).remove(i + 3);
+                    map.get(ogrenciAdi).remove(i + 2);
+                    map.get(ogrenciAdi).remove(i + 1);
+                    map.get(ogrenciAdi).remove(i);
 
+                }
             }
+
+        } else {
+            System.out.println("Boyle bir ders bilgisi bulunamadi");
         }
+    }
 
-    } else {
-        System.out.println("Boyle bir ders bilgisi bulunamadi");
+    public static void courseView(String ogrenciAdi) {
+
+        System.out.printf("%-10s %-10s %-10s %-10s %n", "Ders", "Öğretmen", "Not", "Devamsızlık");
+        for (int i = 7; map.get(ogrenciAdi).size() > i; i += 4) {
+            System.out.printf("%-10s %-10s %-10s %-10s %n",map.get(ogrenciAdi).get(i) ,map.get(ogrenciAdi).get(i + 1) , map.get(ogrenciAdi).get(i + 2) , map.get(ogrenciAdi).get(i + 3));
+        }
     }
 }
 
-public static void courseView(String ogrenciAdi) {
 
-
-    for (int i = 6; list2.get(ogrenciAdi).size() > i; i += 4) {
-        System.out.println(list2.get(ogrenciAdi).get(i) + " " + list2.get("ogrenciAdi").get(i + 1) + " " + list2.get("ogrenciAdi").get(i + 2) + " " + list2.get("ogrenciAdi").get(i + 3));
-    }
-}
